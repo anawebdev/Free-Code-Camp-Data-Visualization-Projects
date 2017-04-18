@@ -30,39 +30,7 @@ var Markdown = React.createClass({
     );
   }
 });
-/*
-class Markdown extends React.Component {
-  constructor(){
-    super();
-    
-    this.state = {
-      txt: initialTxt
-    }
-    
-  }
-  
-      update(e){
-      this.setState({ txt: e.target.value })
-    }
-  
-  render(){
-    return(
-    <div className="wrapper">
-        <div className="header">
-        <h1>MarkDown PreViewer</h1>
-          <hr />
-          </div>
-        <div className="col-sm-6">
-          <textarea className="textArea" onChange={this.update.bind(this)}>{this.state.txt}</textarea>
-          </div>
-        <div className="col-sm-6" dangerouslySetInnerHTML={{__html: marked(this.state.txt)}}></div> 
-       
-     </div>
-    )
-  }
-  
-}
-*/
+
 ReactDOM.render(React.createElement(Markdown, null), document.getElementById('app'));
 
 //Initial text
