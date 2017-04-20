@@ -1,25 +1,51 @@
-const initialText = getText();
+var markedHtml;
+var initialText = getText();
+
+//Initial text
+function getText() {
+  return [
+    'Heading', '=======', 'Sub-heading', '-----------', ' ### Another deeper heading', 'Paragraphs are separated', 'by a blank line.', 'Leave 2 spaces at the end of a line to do a', 'line break', 'Text attributes *italic*, **bold**', `monospace`, '~~strikethrough~~.', 'Shopping list:', '* apples', '* oranges', '* pears', 'Numbered list:', '1. apples', '2. oranges', '3. pears', 'The rain---not the reign---in Spain.', '*[Ana Toma](https://www.freecodecamp.com/anawebdev)*'
+  ].join('\n');
+}
 
 var Markdown = React.createClass({
-  render: function(){
+  getInitialState: function() {
+    return {
+      userInput: initialText
+    }
+  },
+  handleUserInput: function(e) {
+    this.setState({
+      userInput: e.target.value
+
+    });
+  },
+  render: function() {
+    markedHtml = marked(this.state.userInput);
     return (<div>
-        <h1>Markdown Previewer</h1>
+        <h1 id="title">Markdown Previewer</h1>
         <div className="row">
-          <div className="col-md-5" rows="20" cols="20">
-            <textarea wrap="hard">{initialText}
+<div className='col-md-1'>
+          </div>
+          <div className="col-md-5">
+            <textarea 
+              wrap="hard"
+              type="text"
+              onChange={this.handleUserInput}
+              value={this.state.userInput}>
             </textarea>
           </div>
+          <div className="col-md-5">
+          <div 
+            dangerouslySetInnerHTML={{ __html: markedHtml }}
+            id='result'>
+     </div>
+          </div>
+          <div className='col-md-1'>
+          </div>
         </div>
-      </div>
-        )
+      </div>)
   }
 })
 
 ReactDOM.render(<Markdown />, document.getElementById('app'));
-
-//Initial text
-function getText(){
-      return [
-      'Heading', '=======', 'Sub-heading', '-----------',' ### Another deeper heading', 'Paragraphs are separated', 'by a blank line.', 'Leave 2 spaces at the end of a line to do a', 'line break', 'Text attributes *italic*, **bold**', `monospace`, '~~strikethrough~~.', 'Shopping list:', '* apples', '* oranges', '* pears', 'Numbered list:', '1. apples', '2. oranges',  '3. pears', 'The rain---not the reign---in Spain.', '*[Ana Toma](https://www.freecodecamp.com/anawebdev)*'
-        ].join('\n'); 
-}
