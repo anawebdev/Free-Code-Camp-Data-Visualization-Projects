@@ -1,0 +1,50 @@
+//https://fcctop100.herokuapp.com/api/fccusers/top/recent
+//https://fcctop100.herokuapp.com/api/fccusers/top/alltime
+
+var Camper = React.createClass({
+  componentWillMount: function() {
+    fetch('https://fcctop100.herokuapp.com/api/fccusers/top/recent')
+  },
+  render: function() {
+    return (
+      <tr>
+            <td>{this.props.rank}</td>
+            <td>{this.props.img}</td> 
+            <td>{this.props.username}</td>
+            <td>{this.props.recent}</td>
+            <td>{this.props.alltime}</td>
+          </tr>
+    );
+  }
+
+})
+
+var LeaderBoard = React.createClass({
+  render: function() {
+    return (
+      <div className='container-fluid'>
+        <div className="row">
+          <div className="col-sm-1"></div>
+        <div className="col-sm-10">
+        <table align='center'>
+          <tr>
+            <th>Number</th>
+            <th>Icon</th> 
+            <th>Name</th>
+            <th>30 Days</th>
+            <th>All Time</th>
+          </tr>
+          {<Camper />}
+          {<Camper />}
+          {<Camper />}
+        </table>
+        </div>
+          <div className="col-sm-1"></div>
+          </div>
+    </div>
+    );
+  }
+})
+
+ReactDOM.render(<LeaderBoard />, document.getElementById('app'));
+
