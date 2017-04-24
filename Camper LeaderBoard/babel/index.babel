@@ -2,8 +2,35 @@
 //https://fcctop100.herokuapp.com/api/fccusers/top/alltime
 
 var Camper = React.createClass({
-  componentWillMount: function() {
+  getInitialState: function() {
+    return {
+      person: [],
+      type: 'recent'
+    }
+  },
+  recent: function() {
     fetch('https://fcctop100.herokuapp.com/api/fccusers/top/recent')
+      .then((data) => {
+        this.setState({
+          person: data,
+          type: 'recent'
+        });
+      });
+  },
+  allTime: function() {
+    fetch('https://fcctop100.herokuapp.com/api/fccusers/top/alltime')
+      .then((data) => {
+        this.setState({
+          person: data,
+          type: 'allTime'
+        });
+      })
+  },
+  componentDidMount: function() {
+    this.recent();
+  },
+  handleClick: function (){
+    
   },
   render: function() {
     return (
@@ -31,8 +58,8 @@ var LeaderBoard = React.createClass({
             <th>Number</th>
             <th>Icon</th> 
             <th>Name</th>
-            <th>30 Days</th>
-            <th>All Time</th>
+            <th onClick={this.recent}>30 Days</th>
+            <th onClick={this.allTime}>All Time</th>
           </tr>
           {<Camper />}
           {<Camper />}
@@ -48,3 +75,4 @@ var LeaderBoard = React.createClass({
 
 ReactDOM.render(<LeaderBoard />, document.getElementById('app'));
 
+//this.state.type=='recent' ? 'allTime' : 'recent'
