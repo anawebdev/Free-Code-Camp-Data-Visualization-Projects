@@ -6,9 +6,36 @@
 var Camper = React.createClass({
   displayName: 'Camper',
 
-  componentWillMount: function componentWillMount() {
-    fetch('https://fcctop100.herokuapp.com/api/fccusers/top/recent');
+  getInitialState: function getInitialState() {
+    return {
+      person: [],
+      type: 'recent'
+    };
   },
+  recent: function recent() {
+    var _this = this;
+
+    fetch('https://fcctop100.herokuapp.com/api/fccusers/top/recent').then(function (data) {
+      _this.setState({
+        person: data,
+        type: 'recent'
+      });
+    });
+  },
+  allTime: function allTime() {
+    var _this2 = this;
+
+    fetch('https://fcctop100.herokuapp.com/api/fccusers/top/alltime').then(function (data) {
+      _this2.setState({
+        person: data,
+        type: 'allTime'
+      });
+    });
+  },
+  componentDidMount: function componentDidMount() {
+    this.recent();
+  },
+  handleClick: function handleClick() {},
   render: function render() {
     return React.createElement(
       'tr',
@@ -80,12 +107,12 @@ var LeaderBoard = React.createClass({
               ),
               React.createElement(
                 'th',
-                null,
+                { onClick: this.recent },
                 '30 Days'
               ),
               React.createElement(
                 'th',
-                null,
+                { onClick: this.allTime },
                 'All Time'
               )
             ),
@@ -101,3 +128,5 @@ var LeaderBoard = React.createClass({
 });
 
 ReactDOM.render(React.createElement(LeaderBoard, null), document.getElementById('app'));
+
+//this.state.type=='recent' ? 'allTime' : 'recent'
