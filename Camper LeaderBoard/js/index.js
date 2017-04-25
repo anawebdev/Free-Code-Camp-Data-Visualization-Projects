@@ -1,132 +1,97 @@
-'use strict';
-
 //https://fcctop100.herokuapp.com/api/fccusers/top/recent
 //https://fcctop100.herokuapp.com/api/fccusers/top/alltime
 
+var i = 0;
+
 var Camper = React.createClass({
-  displayName: 'Camper',
+      getInitialState: function() {
+        return {
+          camper: [],
+          type: 'recent'
+        }
+      },
+      recent: function() {
+        var self = this;
+        $.get('https://fcctop100.herokuapp.com/api/fccusers/top/recent', function(data) {
+          console.log(data);
+          self.setState({
+            information: data,
+            camper: data[i].username,
+            img: data[i].img,
+            alltimePoints: data[i].alltime,
+            recentPoints: data[i].recent
+          });
+        });
+      },
+      allTime: function() {
+        var self = this;
+        $.get('https://fcctop100.herokuapp.com/api/fccusers/top/alltime', function(data) {
+          self.setState({
+            camper: data.username,
+            img: data.img,
+            alltimePoints: data.alltime,
+            recentPoints: data[i].recent
+          });
+        });
+      },
+      componentDidMount: function() {
+        this.recent();
+      },
+      handleClick: function() {
 
-  getInitialState: function getInitialState() {
-    return {
-      person: [],
-      type: 'recent'
-    };
-  },
-  recent: function recent() {
-    var _this = this;
+      },
+      render: function() {
+          var person = this.props.data.map(function(user, idx) {
+            return <Row key={idx} img={user.img} name={user.username} recent={user.recent} allTime={user.alltime}/>
+          })
 
-    fetch('https://fcctop100.herokuapp.com/api/fccusers/top/recent').then(function (data) {
-      _this.setState({
-        person: data,
-        type: 'recent'
-      });
-    });
-  },
-  allTime: function allTime() {
-    var _this2 = this;
-
-    fetch('https://fcctop100.herokuapp.com/api/fccusers/top/alltime').then(function (data) {
-      _this2.setState({
-        person: data,
-        type: 'allTime'
-      });
-    });
-  },
-  componentDidMount: function componentDidMount() {
-    this.recent();
-  },
-  handleClick: function handleClick() {},
-  render: function render() {
-    return React.createElement(
-      'tr',
-      null,
-      React.createElement(
-        'td',
-        null,
-        this.props.rank
-      ),
-      React.createElement(
-        'td',
-        null,
-        this.props.img
-      ),
-      React.createElement(
-        'td',
-        null,
-        this.props.username
-      ),
-      React.createElement(
-        'td',
-        null,
-        this.props.recent
-      ),
-      React.createElement(
-        'td',
-        null,
-        this.props.alltime
-      )
-    );
-  }
-
-});
-
-var LeaderBoard = React.createClass({
-  displayName: 'LeaderBoard',
-
-  render: function render() {
-    return React.createElement(
-      'div',
-      { className: 'container-fluid' },
-      React.createElement(
-        'div',
-        { className: 'row' },
-        React.createElement('div', { className: 'col-sm-1' }),
-        React.createElement(
-          'div',
-          { className: 'col-sm-10' },
-          React.createElement(
-            'table',
-            { align: 'center' },
-            React.createElement(
-              'tr',
-              null,
-              React.createElement(
-                'th',
-                null,
-                'Number'
-              ),
-              React.createElement(
-                'th',
-                null,
-                'Icon'
-              ),
-              React.createElement(
-                'th',
-                null,
-                'Name'
-              ),
-              React.createElement(
-                'th',
-                { onClick: this.recent },
-                '30 Days'
-              ),
-              React.createElement(
-                'th',
-                { onClick: this.allTime },
-                'All Time'
+          var Row = React.createClass({
+            render: function() {
+              return (
+                <tr>
+            <td>{this.props.key+1}</td>
+            <td><img src={this.props.img}></img></td> 
+            <td>{this.props.username}</td>
+            <td>{this.props.recent}</td>
+            <td>{this.props.alltime}</td>
+          </tr>
               )
-            ),
-            React.createElement(Camper, null),
-            React.createElement(Camper, null),
-            React.createElement(Camper, null)
-          )
-        ),
-        React.createElement('div', { className: 'col-sm-1' })
-      )
-    );
-  }
-});
+            }
+          });
 
-ReactDOM.render(React.createElement(LeaderBoard, null), document.getElementById('app'));
+          var Header = React.createClass({
+            render: function() {
+              return (
+                <div className='container-fluid'>
+        <div className="row">
+          <div className="col-sm-1"></div>
+        <div className="col-sm-10">
+        <table align='center'>
+          <tr>
+            <th>#</th>
+            <th>Icon</th> 
+            <th>Name</th>
+            <th onClick={this.recent}>30 Days</th>
+            <th onClick={this.allTime}>All Time</th>
+          </tr>
+          {<Row />}
+        </table>
+        </div>
+          <div className="col-sm-1"></div>
+          </div>
+    </div>
+              );
+            }
+          })
 
-//this.state.type=='recent' ? 'allTime' : 'recent'
+          var App = React.createClass({
+            render: function() {
+              return (
+                <div>
+      {<Header />}
+        </div>
+              );
+            }
+          })
+
+          ReactDOM.render(<App />, document.getElementById('app'));
