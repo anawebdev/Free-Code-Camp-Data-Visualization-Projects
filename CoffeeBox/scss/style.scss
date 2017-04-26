@@ -1,0 +1,79 @@
+$header-brown: #4D3F3C;
+$header-font: #9B8D8A;
+$background: #D5CCBD;
+$shadow: #685742;
+$font-color: #887F7B;
+$hover: #533326;
+
+body {
+  background-color:$background;
+}
+.header {
+  background-color:$header-brown;
+  padding: 20px 0 20px 0;
+  font-family: 'Lobster', cursive;
+  color:$header-font;
+}
+.box {
+  background-color:white;
+  height:100px;
+  width:100%;
+  margin-top:15px;
+  box-shadow: 3px 3px 10px $shadow;
+  border-radius:12px;
+  overflow:hidden;
+}
+.box:hover {
+  background-color:$header-brown;
+  cursor:pointer;
+  h4{
+    color:white;
+  }
+}
+.preview {
+  overflow:hidden;
+  width:140px;
+  height:100px;
+  margin-left:-20px;
+
+}
+h4 {
+  font-family: 'Lobster', cursive;
+  color:$font-color;
+  padding-left:15px;
+  z-index:10;
+    display:inline-block;
+  font-size:1.5em;
+
+
+}
+
+//snippet from stack-overflow
+
+/* xs < 768 */
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 0.8em;
+    }
+}
+
+/* sm */
+@media screen and (min-width: 768px) {
+    body {
+        font-size: 1em;
+    }
+}
+
+/* md */
+@media screen and (min-width: 992px) {
+    body {
+        font-size: 1.2em;
+    }
+}
+
+/* lg */
+@media screen and (min-width: 1200px) {
+    body {
+        font-size: 1.3em;
+    }
+}

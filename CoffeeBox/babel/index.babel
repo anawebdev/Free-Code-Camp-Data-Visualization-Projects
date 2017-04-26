@@ -1,0 +1,61 @@
+var Recipe = React.createClass({
+  render: function() {
+    return (
+      <div>
+        {props.children}
+      </div>
+    );
+  }
+});
+
+var Layout = React.createClass({
+  render: function() {
+    return (
+      <div className="container-fluid">
+        <div className="row header">
+          <div className="col-sm-1" />
+          <div className="col-sm-10">
+            <h1>CoffeeBox</h1>
+          </div>
+          <div className="col-sm-1" />
+        </div>
+        
+        <div className="row container-fluid">
+          <div className="col-sm-1" />
+          <div className="col-sm-10 box">
+            <img className='preview' src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/275px-A_small_cup_of_coffee.JPG'/>
+            <h4>Vienese Coffee</h4>
+          </div>
+          <div className="col-sm-1" />
+        </div>
+        
+                <div className="row container-fluid">
+          <div className="col-sm-1" />
+          <div className="col-sm-10 box">
+            <img className='preview' src='http://sawadacoffee.com/wp-content/uploads/Sawada-Coffee-10DEC2015-003.jpg'/>
+            <h4>Gingerbread Latte </h4>
+          </div>
+          <div className="col-sm-1" />
+        </div>
+        
+                        <div className="row container-fluid">
+          <div className="col-sm-1" />
+          <div className="col-sm-10 box">
+            <img className='preview' src='https://livinghealthywithchocolate.com/wp-content/uploads/2015/04/Healthy-Paleo-Starbucks-Mocha-Frappuccino-Recipe-dairyfree-glutenfree-sugarfree1.jpg'/>
+            <h4>Frappuccino Mocha</h4>
+          </div>
+          <div className="col-sm-1" />
+        </div>
+                
+      </div>
+    ); 
+  }
+});
+
+var App = React.createClass({
+  render: function() {
+    return <Layout />;
+  }
+});
+
+ReactDOM.render(<App />, document.getElementById("app"));
