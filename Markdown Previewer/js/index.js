@@ -1,61 +1,128 @@
-'use strict';
+"use strict";
 
-var markedHtml;
-var initialText = getText();
+//https://fcctop100.herokuapp.com/api/fccusers/top/recent
+//https://fcctop100.herokuapp.com/api/fccusers/top/alltime
 
-//Initial text
-function getText() {
-  return ['Heading', '=======', 'Sub-heading', '-----------', ' ### Another deeper heading', 'Paragraphs are separated', 'by a blank line.', 'Leave 2 spaces at the end of a line to do a', 'line break', 'Text attributes *italic*, **bold**', 'monospace', '~~strikethrough~~.', 'Shopping list:', '* apples', '* oranges', '* pears', 'Numbered list:', '1. apples', '2. oranges', '3. pears', 'The rain---not the reign---in Spain.', '*[Ana Toma](https://www.freecodecamp.com/anawebdev)*'].join('\n');
-}
-
-var Markdown = React.createClass({
-  displayName: 'Markdown',
+var LeaderBoard = React.createClass({
+  displayName: "LeaderBoard",
 
   getInitialState: function getInitialState() {
     return {
-      userInput: initialText
+      camper: [],
+      type: "recent"
     };
   },
-  handleUserInput: function handleUserInput(e) {
-    this.setState({
-      userInput: e.target.value
-
-    });
+  recent: function recent() {
+    var self = this;
+    $.get("https://fcctop100.herokuapp.com/api/fccusers/top/recent", function (data) {
+      self.setState({
+        camper: data,
+        type: "recent"
+      });
+    }.bind(this));
+  },
+  allTime: function allTime() {
+    var self = this;
+    $.get("https://fcctop100.herokuapp.com/api/fccusers/top/alltime", function (data) {
+      self.setState({
+        camper: data,
+        type: "alltime"
+      });
+    }.bind(this));
+  },
+  componentDidMount: function componentDidMount() {
+    this.recent();
+  },
+  handleRecentClick: function handleRecentClick(e) {
+    this.recent();
+  },
+  handleAlltimeClick: function handleAlltimeClick(e) {
+    this.allTime();
   },
   render: function render() {
-    markedHtml = marked(this.state.userInput);
     return React.createElement(
-      'div',
-      null,
+      "div",
+      { className: "container-fluid" },
       React.createElement(
-        'h1',
-        { id: 'title' },
-        'Markdown Previewer'
-      ),
-      React.createElement(
-        'div',
-        { className: 'row' },
-        React.createElement('div', { className: 'col-md-1' }),
+        "div",
+        { className: "row" },
+        React.createElement("div", { className: "col-sm-1" }),
         React.createElement(
-          'div',
-          { className: 'col-md-5' },
-          React.createElement('textarea', {
-            wrap: 'hard',
-            type: 'text',
-            onChange: this.handleUserInput,
-            value: this.state.userInput })
+          "div",
+          { className: "col-sm-10" },
+          React.createElement(
+            "table",
+            { align: "center" },
+            React.createElement(
+              "tr",
+              null,
+              React.createElement(
+                "th",
+                null,
+                "#"
+              ),
+              React.createElement(
+                "th",
+                null,
+                "Icon"
+              ),
+              React.createElement(
+                "th",
+                null,
+                "FreeCodeCamper"
+              ),
+              React.createElement(
+                "th",
+                { onClick: this.recent },
+                "30 Days"
+              ),
+              React.createElement(
+                "th",
+                { onClick: this.allTime },
+                "All Time"
+              )
+            ),
+            this.state.camper.map(function (user, index) {
+              return React.createElement(
+                "tr",
+                null,
+                React.createElement(
+                  "td",
+                  null,
+                  index + 1
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  React.createElement("img", { src: user.img })
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  React.createElement(
+                    "a",
+                    { href: "https://freecodecamp.com/" + user.username, target: "_blank" },
+                    user.username
+                  )
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  user.recent
+                ),
+                React.createElement(
+                  "td",
+                  null,
+                  user.alltime
+                )
+              );
+            })
+          )
         ),
-        React.createElement(
-          'div',
-          { className: 'col-md-5' },
-          React.createElement('div', {
-            dangerouslySetInnerHTML: { __html: markedHtml },
-            id: 'result' })
-        ),
-        React.createElement('div', { className: 'col-md-1' })
+        React.createElement("div", { className: "col-sm-1" })
       )
     );
   }
 });
 
-ReactDOM.render(React.createElement(Markdown, null), document.getElementById('app'));
+ReactDOM.render(React.createElement(LeaderBoard, null), document.getElementById("app"));
