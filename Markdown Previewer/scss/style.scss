@@ -1,69 +1,102 @@
-@import url('https://fonts.googleapis.com/css?family=Archivo+Black');
-@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+$text-color: #F6F3EA;
+$header-color: #84A220;
+$highlight-color: #C4D69C;
+$row-color1: #776a5e;
+$row-color2: #D3CBC0;
+$division-color: rgba(255, 255, 255, .4);
+$image-radius:50%;
+$shadow: rgba(119, 106, 94, .6);
 
-$main-color: #666666;
-$subtitle: #333333;
-$subtitlesmall: #4d4d4d;
-$title-color: #ffffff;
-$background-color: grey;
-$padding-text: 30px;
-$text-background:rgba(255,255,255,0.95);
-$shadow: rgba(64,64,64,0.30);
-$color1: rgba(153,218,255,1) 0%;
-$color2: rgba(0,128,128,1) 100%;
-$font-title:'Archivo Black', 'Arial', sans-serif;
-$font-text:'PT Sans', 'Arial',sans-serif;
-
-html {
-  height: 100%
+img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
-body {
-  background-color: $color2;
-  background: -moz-radial-gradient(center, ellipse cover, $color1, $color2);
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, $color1), color-stop(100%, $color2));
-  background: -webkit-radial-gradient(center, ellipse cover, $color1, $color2);
-  background: -o-radial-gradient(center, ellipse cover, $color1, $color2);
-  background: -ms-radial-gradient(center, ellipse cover, $color1, $color2);
-  background: radial-gradient(ellipse at center, $color1, $color2);
-}
-
-textarea,
-#result {
-  margin-top: 0;
-  color: $main-color;
-  width: 100%;
-  height: 140%;
-  padding: $padding-text;
-  border-radius: 12px;
-  border: solid 1px white;
-  background-color: $text-background;
-  box-shadow: 8px 8px 10px $shadow;
-  font-family: $font-text;
-  overflow: auto;
-  overflow-x: hidden;
-}
-
-h1 {
-  color: $subtitle;
-  font-family: $font-text;
-}
-
-h2,
-h3 {
-  color: $subtitlesmall;
-  font-family: $font-text;
-}
-
-#title {
-  color: $title-color;
-  top: 20%;
+table {
+  margin-top: 80px;
+  margin-bottom: 80px;
+  border-radius: 8px;
+  background-color: $header-color;
   text-align: center;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  font-family: $font-title;
+  padding: 10px;
+  width: 100%;
+  box-shadow: 3px 3px 15px $shadow;
 }
 
-::-webkit-scrollbar {
-  display: hidden;
+th {
+  font-weight: 700px;
+  padding: 20px 5px 20px 5px;
+  color: white;
+  text-align: center;
+}
+
+td {
+  height: 50px;
+  padding: 5px;
+  color: $row-color1;
+  background-color: $row-color2;
+  text-align: center;
+  border-bottom: solid $division-color .5px;
+  font-size:20x;
+}
+
+th:nth-child(4):hover,
+th:nth-child(5):hover {
+  cursor: pointer;
+  background-color: $highlight-color;
+}
+
+td:hover {
+  background-color: $highlight-color;
+}
+
+th:nth-child(2) {
+  width: 50px;
+}
+
+th:nth-child(1) {
+  width: 50px;
+}
+
+a,
+a:visited,
+a:hover {
+  color: $row-color1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover {
+  font-weight: 700;
+}
+
+//snippet from stack-overflow
+
+/* xs < 768 */
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 0.8em;
+    }
+}
+
+/* sm */
+@media screen and (min-width: 768px) {
+    body {
+        font-size: 1em;
+    }
+}
+
+/* md */
+@media screen and (min-width: 992px) {
+    body {
+        font-size: 1.2em;
+    }
+}
+
+/* lg */
+@media screen and (min-width: 1200px) {
+    body {
+        font-size: 1.3em;
+    }
 }
