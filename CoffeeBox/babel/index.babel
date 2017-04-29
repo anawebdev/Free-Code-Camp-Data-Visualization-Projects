@@ -19,43 +19,97 @@ var Layout = React.createClass({
           </div>
           <div className="col-sm-1" />
         </div>
-        
+
         <div className="row container-fluid">
           <div className="col-sm-1" />
           <div className="col-sm-10 box">
-            <img className='preview' src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/275px-A_small_cup_of_coffee.JPG'/>
+            <img
+              className="preview"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/275px-A_small_cup_of_coffee.JPG"
+            />
             <h4>Vienese Coffee</h4>
           </div>
           <div className="col-sm-1" />
         </div>
-        
-                <div className="row container-fluid">
+
+        <div className="row container-fluid">
           <div className="col-sm-1" />
           <div className="col-sm-10 box">
-            <img className='preview' src='http://sawadacoffee.com/wp-content/uploads/Sawada-Coffee-10DEC2015-003.jpg'/>
-            <h4>Gingerbread Latte </h4>
+            <img
+              className="preview"
+              src="http://sawadacoffee.com/wp-content/uploads/Sawada-Coffee-10DEC2015-003.jpg"
+            />
+            <h4>Gingerbread Latte</h4>
           </div>
           <div className="col-sm-1" />
         </div>
-        
-                        <div className="row container-fluid">
+
+        <div className="row container-fluid">
           <div className="col-sm-1" />
           <div className="col-sm-10 box">
-            <img className='preview' src='https://livinghealthywithchocolate.com/wp-content/uploads/2015/04/Healthy-Paleo-Starbucks-Mocha-Frappuccino-Recipe-dairyfree-glutenfree-sugarfree1.jpg'/>
+            <img
+              className="preview"
+              src="https://livinghealthywithchocolate.com/wp-content/uploads/2015/04/Healthy-Paleo-Starbucks-Mocha-Frappuccino-Recipe-dairyfree-glutenfree-sugarfree1.jpg"
+            />
             <h4>Frappuccino Mocha</h4>
           </div>
           <div className="col-sm-1" />
         </div>
-                
+        {<AddRecipe />}
       </div>
-    ); 
+    );
   }
 });
 
-var App = React.createClass({
+var AddRecipe = React.createClass({
+  getInitialState: function() {
+    return {
+      title: "",
+      image: "",
+      ingredients: [],
+      instructions: []
+    };
+  },
+  getNewRecipe: function() {
+    return <Modal />;
+  },
   render: function() {
-    return <Layout />;
+    return (
+      <div className="row container-fluid">
+        <div className="col-sm-1" />
+        <div className="col-sm-10 box" onClick={this.addInfo}>
+          <div className="row">
+            <i className="fa fa-plus-circle icon" aria-hidden="true" />
+            <h4 id="last">Add Recipe</h4>
+          </div>
+        </div>
+        <div className="col-sm-1" />
+      </div>
+    );
   }
 });
 
-ReactDOM.render(<App />, document.getElementById("app"));
+var Modal = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <div id="addWindow" >
+        <form id='form1'>
+          <input type="text" id="title" name="title" placeholder="Title..."/><br/>
+          <input type="text" id="image" name="image" placeholder="Type image URL..."/><br/>
+          <textarea type="text" id="ingredients" name="ingredients" placeholder="Ingredient list..."/><br/>
+          <textarea type="text" id="instructions" name="instructions" placeholder="Write instructions..."/>
+          </form>
+        <div id='buttonGroup'>
+          <button className='btn btn-primary btn-block' id='btn1' type="submit" value="Submit" form="form1">Add</button>
+          <button className='btn btn-success btn-block' id='btn2'  type="submit" value="Edit" form="form1">Edit</button>
+          <button className='btn btn-danger btn-block' id='btn3' type="close" value="Close" form="form1">Close</button>
+        </div>
+        </div>
+      </div>
+    );
+  }
+});
+
+ReactDOM.render(<Layout />, document.getElementById("app"));
+//ReactDOM.render(<Modal />, document.getElementById("app"));
