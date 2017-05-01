@@ -105,11 +105,26 @@ var Modal = React.createClass({
           <button className='btn btn-success btn-block' id='btn2'  type="submit" value="Edit" form="form1">Edit</button>
           <button className='btn btn-danger btn-block' id='btn3' type="close" value="Close" form="form1">Close</button>
         </div>
-        </div>
+        </div> 
       </div>
     );
   }
 });
+
+/*
+$(document).on('click', '.panel-heading span.clickable', function(e){
+    var $this = $(this);
+	if(!$this.hasClass('panel-collapsed')) {
+		$this.parents('.panel').find('.panel-body').slideUp();
+		$this.addClass('panel-collapsed');
+		$this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+	} else {
+		$this.parents('.panel').find('.panel-body').slideDown();
+		$this.removeClass('panel-collapsed');
+		$this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+	}
+})*/
+
 
 ReactDOM.render(<Layout />, document.getElementById("app"));
 //ReactDOM.render(<Modal />, document.getElementById("app"));
