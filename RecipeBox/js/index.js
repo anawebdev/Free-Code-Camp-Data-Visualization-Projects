@@ -1,5 +1,15 @@
 "use strict";
 
+//TO DO
+//add external links
+//edit
+//close accordion when deleting item
+//add markdown text
+//add comments
+//add detailed documentation on github
+//dont forget to tidy it up
+//add a maximum of characters for the input field title
+
 var Header = React.createClass({
   displayName: "Header",
 
@@ -33,7 +43,7 @@ var Footer = React.createClass({
   render: function render() {
     return React.createElement(
       "footer",
-      null,
+      { className: "hidden-xs" },
       React.createElement(
         "div",
         { className: "container-fluid" },
@@ -74,7 +84,7 @@ var Footer = React.createClass({
             React.createElement(
               "button",
               { className: "contact btn btn-block" },
-              React.createElement("i", { className: "fa fa-linkedin-square", "aria-hidden": "true" })
+              React.createElement("i", { className: "fa fa-codepen", "aria-hidden": "true" })
             )
           ),
           React.createElement("div", { className: "col-sm-2" })
@@ -99,36 +109,41 @@ var Accordion = React.createClass({
         recipes: JSON.parse(localStorage.getItem("_feuerbird29_recipes"))
       };
     }
-    var initialRecipes = JSON.stringify([{
+    var initial = [{
       title: "Hot Buttered Toffee Coffee",
-      img: "http://www.dunkincreamer.com/wp-content/uploads/2016/07/EnglishToffeeCoffee.png",
+      img: "http://cemaradinda.com/wp-content/uploads/IMG_3358.jpg",
       ingredients: "coffee mocha ice cream, hot coffee, butterscotch topping, almond liqueur, whipped topping, toffee pieces or 14.79 ml chopped chocolate-covered english toffee bar",
       instructions: "Spoon ice cream into a large coffee mug;pour coffee, butterscotch topping and almond liqueur over ice cream. Garnish with a dollop of whipped cream and sprinkle of toffee chips."
     }, {
       title: "Mint Espresso",
-      img: "http://www.lavazza.us/default/.content/images/recipe/caffe_padovano_782x441.jpg",
+      img: "https://s-media-cache-ak0.pinimg.com/736x/c0/84/c1/c084c1c3c72d94242e404eb62f2ff848.jpg",
       ingredients: "espresso, milk, double cream, mint syrup and cocoa powder",
       instructions: "Brew an espresso in a cappuccino cup. Add 60ml of the Mint Milk Cream. Lightly dust with bitter cocoa powder. Preparation of Mint Milk Cream (serves 2): Pour the cold whole milk into a large bowl. Add the double cream, milk and mint syrup. Whip with an electric whisk to obtain a soft fluffy mixture. We recommend preparing this recipe with espresso coffee."
-    }]);
-    localStorage.setItem("_feuerbird29_recipes", initialRecipes);
+    }, {
+      title: "Hazelnut Coffee",
+      img: "https://68.media.tumblr.com/e1274b1abdb3710716305032b0fa7d60/tumblr_onm2dmpheq1s30ko5o1_500.jpg",
+      ingredients: "Frangelico Hazelnut Liqueur, Fresh Brewed Coffee, Whipped Cream, Chocolate Shavings",
+      instructions: "Add ingredients to a heat resistant mug in the order given. Top with whipped cream and chocolate shavings."
+    }];
+    localStorage.setItem("_feuerbird29_recipes", JSON.stringify(initial));
     return {
-      recipes: [{
-        title: "Hot Buttered Toffee Coffee",
-        img: "http://www.dunkincreamer.com/wp-content/uploads/2016/07/EnglishToffeeCoffee.png",
-        ingredients: "coffee mocha ice cream, hot coffee, butterscotch topping, almond liqueur, whipped topping, toffee pieces or 14.79 ml chopped chocolate-covered english toffee bar",
-        instructions: "Brew an espresso in a cappuccino cup. Add 60ml of the Mint Milk Cream. Lightly dust with bitter cocoa powder. Preparation of Mint Milk Cream (serves 2): Pour the cold whole milk into a large bowl. Add the double cream, milk and mint syrup. Whip with an electric whisk to obtain a soft fluffy mixture. We recommend preparing this recipe with espresso coffee."
-      }, {
-        title: "Mint Espresso",
-        img: "http://www.lavazza.us/default/.content/images/recipe/caffe_padovano_782x441.jpg",
-        ingredients: "espresso, milk, double cream, mint syrup and cocoa powder",
-        instructions: "Brew an espresso in a cappuccino cup. Add 60ml of the Mint Milk Cream. Lightly dust with bitter cocoa powder. Preparation of Mint Milk Cream (serves 2): Pour the cold whole milk into a large bowl. Add the double cream, milk and mint syrup. Whip with an electric whisk to obtain a soft fluffy mixture. We recommend preparing this recipe with espresso coffee."
-      }]
+      recipes: initial
     };
   },
-  handleEdit: function handleEdit(e) {},
-  handleDelete: function handleDelete(e) {},
+  handleEdit: function handleEdit(e) {
+    return React.createElement(Modal, null);
+  },
+  handleDelete: function handleDelete(e) {
+    var index = e.target.id;
+    var object = JSON.parse(localStorage.getItem("_feuerbird29_recipes"));
+    object.splice(index, 1);
+    localStorage.setItem("_feuerbird29_recipes", JSON.stringify(object));
+    this.state = {
+      recipes: object
+    };
+    ReactDOM.render(React.createElement(RecipeBox, null), document.getElementById("app"));
+  },
   handleSave: function handleSave(e) {
-
     var title = document.getElementById("title").value;
     var img = document.getElementById("img").value;
     var ingredients = document.getElementById("ingredients").value;
@@ -149,19 +164,6 @@ var Accordion = React.createClass({
       ReactDOM.render(React.createElement(RecipeBox, null), document.getElementById("app"));
     }
   },
-  handleTitleChange: function handleTitleChange(e) {
-    this.props.title = e.target.value;
-  },
-  handleImgChange: function handleImgChange(e) {
-    this.props.img = e.target.value;
-  },
-  handleIngredientsChange: function handleIngredientsChange(e) {
-    this.props.ingredients = e.target.value;
-  },
-  handleInstructionsChange: function handleInstructionsChange(e) {
-    this.props.instructions = e.target.value;
-  },
-
   render: function render() {
     return React.createElement(
       "div",
@@ -200,39 +202,31 @@ var Accordion = React.createClass({
                   null,
                   React.createElement("input", {
                     defaultValue: this.props.title,
-                    onChange: this.handleTitleChange,
                     type: "text",
                     id: "title",
                     placeholder: "Title... (required)",
-                    required: "required"
+                    maxlength: "20"
                   }),
                   React.createElement("br", null),
                   React.createElement("input", {
                     defaultValue: this.props.img,
-                    onChange: this.handleImgChange,
                     type: "url",
                     id: "img",
-                    placeholder: "Image URL...",
-                    required: "required"
+                    placeholder: "Image URL..."
                   }),
                   React.createElement("br", null),
                   React.createElement("textarea", {
                     defaultValue: this.props.ingredients,
-                    onChange: this.handleIngredientsChange,
                     type: "text",
                     id: "ingredients",
-                    placeholder: "Ingredients... (required)",
-                    required: "required"
+                    placeholder: "Ingredients... (required)"
                   }),
                   React.createElement("br", null),
                   React.createElement("textarea", {
                     defaultValue: this.props.instructions,
-                    onChange: this.handleInstructionsChange,
                     type: "text",
                     id: "instructions",
-                    placeholder: "Instructions... (required)",
-                    onChange: this.handleUserInput,
-                    required: "required"
+                    placeholder: "Instructions... (required)"
                   }),
                   React.createElement("br", null)
                 )
@@ -261,6 +255,7 @@ var Accordion = React.createClass({
                   React.createElement(
                     "h3",
                     { className: "panel-title" },
+                    React.createElement("img", { src: data.img, className: "avatar" }),
                     data.title
                   )
                 )
@@ -276,32 +271,119 @@ var Accordion = React.createClass({
                 React.createElement(
                   "div",
                   { className: "panel-body" },
-                  data.ingredients
+                  React.createElement(
+                    "h4",
+                    null,
+                    "Ingredients:"
+                  ),
+                  React.createElement(
+                    "p",
+                    null,
+                    data.ingredients
+                  )
                 ),
                 React.createElement(
                   "div",
                   { className: "panel-body" },
-                  data.instructions
+                  React.createElement(
+                    "h4",
+                    null,
+                    "Instructions:"
+                  ),
+                  React.createElement(
+                    "p",
+                    null,
+                    data.instructions
+                  )
                 ),
                 React.createElement(
                   "div",
                   { className: "panel-footer" },
                   React.createElement(
                     "button",
-                    { className: "btn taskbtn" },
+                    {
+                      className: "btn taskbtn",
+                      value: index,
+                      onClick: this.handleEdit,
+                      "data-toggle": "modal",
+                      "data-target": "#myModal"
+                    },
                     "Edit"
                   ),
                   React.createElement(
                     "button",
-                    { className: "btn taskbtn" },
+                    {
+                      className: "btn taskbtn",
+                      id: index,
+                      onClick: this.handleDelete
+                    },
                     "Delete"
                   )
                 )
               )
             );
-          })
+          }.bind(this))
         ),
         React.createElement("div", { className: "col-sm-1" })
+      ),
+      React.createElement(
+        "div",
+        { id: "myModal", className: "modal fade", role: "dialog" },
+        React.createElement(
+          "div",
+          { className: "modal-dialog" },
+          React.createElement(
+            "div",
+            { className: "modal-content" },
+            React.createElement(
+              "div",
+              { className: "modal-header" },
+              React.createElement(
+                "h4",
+                { className: "modal-title" },
+                "Modal Header"
+              )
+            ),
+            React.createElement(
+              "div",
+              { className: "modal-body" },
+              React.createElement("input", null)
+            ),
+            React.createElement(
+              "div",
+              { className: "modal-body" },
+              React.createElement("input", null)
+            ),
+            React.createElement(
+              "div",
+              { className: "modal-body" },
+              React.createElement("textarea", null)
+            ),
+            React.createElement(
+              "div",
+              { className: "modal-body" },
+              React.createElement("textarea", null)
+            ),
+            React.createElement(
+              "div",
+              { className: "modal-footer" },
+              React.createElement(
+                "button",
+                { type: "button", className: "btn btn-default" },
+                "Save"
+              ),
+              React.createElement(
+                "button",
+                {
+                  type: "button",
+                  className: "btn btn-default",
+                  "data-dismiss": "modal"
+                },
+                "Close"
+              )
+            )
+          )
+        )
       )
     );
   }
