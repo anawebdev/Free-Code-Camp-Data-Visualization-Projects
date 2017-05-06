@@ -1,7 +1,7 @@
 $header-brown: #4D3F3C;
 $header-font: #9B8D8A;
 $background: #D5CCBD;
-$shadow: #685742;
+$shadow: rgba(104, 87, 66, .7);
 $font-color: #887F7B;
 $hover: #533326;
 $window-height: 50%;
@@ -52,14 +52,15 @@ footer {
  color: $font-color;
 }
 h3,h4 {
-  margin-left: 20px;
+  margin-left: 15px;
   text-align: left;
   position: relative;
   vertical-align: middle;
 }
 .panel-heading {
+  box-shadow: 1px 1px 8px $shadow;
    background-color: white;  
- border-radius: 12px;
+ border-radius: 4px;
  height: 45px;
   color: $font-color;
   h3,h4 {
@@ -80,11 +81,18 @@ h3,h4 {
   }
 }
 .panel-body {
-  color:$header-brown;
+  color:$font-color;
   font-size: 1.2em;
+  font-family: 'Dosis', sans-serif;
+  font-weight:100;
+  h4 {
+    font-weight: 700;
+  }
   img {
     height: auto;
-    width: 100%;
+    width: 50%;
+    margin-left:25%;
+    box-shadow: 1px 1px 8px $shadow;
 }
 }
 input, textarea {
@@ -107,3 +115,48 @@ input, textarea {
     background-color:$background;
     color: $header-brown;
   }
+.taskbtn:visited {
+  color: white;
+}
+.avatar {
+  height: 45px;
+  width: 45px;
+  margin-left:0px;
+  margin-right:20px;
+  margin-top:-10px;
+  padding-top:0;
+  box-shadow: 1px 1px 4px $shadow;
+}
+
+//MEDIA QUERIES
+
+/* xs < 768 */
+@media screen and (max-width: 767px) {
+    body {
+        font-size: 0.8em;
+    }
+  .main {
+    margin-bottom: 0px;
+  }
+}
+
+/* sm */
+@media screen and (min-width: 768px) {
+    body {
+        font-size: 1em;
+    }
+}
+
+/* md */
+@media screen and (min-width: 992px) {
+    body {
+        font-size: 1.2em;
+    }
+}
+
+/* lg */
+@media screen and (min-width: 1200px) {
+    body {
+        font-size: 1.3em;
+    }
+}

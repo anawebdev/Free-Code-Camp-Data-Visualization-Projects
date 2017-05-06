@@ -52,15 +52,16 @@ footer {
 }
 
 h3, h4 {
-  margin-left: 20px;
+  margin-left: 15px;
   text-align: left;
   position: relative;
   vertical-align: middle;
 }
 
 .panel-heading {
+  box-shadow: 1px 1px 8px rgba(104, 87, 66, 0.7);
   background-color: white;
-  border-radius: 12px;
+  border-radius: 4px;
   height: 45px;
   color: #887F7B;
 }
@@ -82,12 +83,19 @@ h3, h4 {
 }
 
 .panel-body {
-  color: #4D3F3C;
+  color: #887F7B;
   font-size: 1.2em;
+  font-family: 'Dosis', sans-serif;
+  font-weight: 100;
+}
+.panel-body h4 {
+  font-weight: 700;
 }
 .panel-body img {
   height: auto;
-  width: 100%;
+  width: 50%;
+  margin-left: 25%;
+  box-shadow: 1px 1px 8px rgba(104, 87, 66, 0.7);
 }
 
 input, textarea {
@@ -112,4 +120,47 @@ input, textarea {
 .taskbtn:hover {
   background-color: #D5CCBD;
   color: #4D3F3C;
+}
+
+.taskbtn:visited {
+  color: white;
+}
+
+.avatar {
+  height: 45px;
+  width: 45px;
+  margin-left: 0px;
+  margin-right: 20px;
+  margin-top: -10px;
+  padding-top: 0;
+  box-shadow: 1px 1px 4px rgba(104, 87, 66, 0.7);
+}
+
+/* xs < 768 */
+@media screen and (max-width: 767px) {
+  body {
+    font-size: 0.8em;
+  }
+
+  .main {
+    margin-bottom: 0px;
+  }
+}
+/* sm */
+@media screen and (min-width: 768px) {
+  body {
+    font-size: 1em;
+  }
+}
+/* md */
+@media screen and (min-width: 992px) {
+  body {
+    font-size: 1.2em;
+  }
+}
+/* lg */
+@media screen and (min-width: 1200px) {
+  body {
+    font-size: 1.3em;
+  }
 }
