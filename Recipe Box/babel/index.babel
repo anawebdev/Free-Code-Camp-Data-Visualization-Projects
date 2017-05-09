@@ -92,9 +92,6 @@ var Accordion = React.createClass({
       recipes: initial
     };
   },
-  handleEdit: function(e) {
-    return <Modal />;
-  },
   handleDelete: function(e) {
     var index = e.target.id;
     var object = JSON.parse(localStorage.getItem("_feuerbird29_recipes"));
