@@ -1,7 +1,4 @@
 //TO DO
-//add external links
-//edit
-//close accordion when deleting item
 //add markdown text
 //add comments
 //add detailed documentation on github
@@ -13,10 +10,8 @@ var Header = React.createClass({
     return (
       <div className="container-fluid">
         <div className="row header">
-          <div className="col-sm-1" />
-          <hr />
-          <div className="col-sm-10">
-            <h1>CoffeeBox</h1>
+          <div className="col-sm-12">
+            <h1 id="pageTitle">CoffeeBox</h1>
           </div>
           <div className="col-sm-1" />
         </div>
@@ -33,24 +28,24 @@ var Footer = React.createClass({
           <div className="row">
             <div className="col-sm-2" />
             <div className="col-sm-2">
-              <button className="contact btn btn-block">
+             <a target="_blank" href="https://www.freecodecamp.com/anawebdev"> <button className="contact btn btn-block">
                 <i className="fa fa-free-code-camp" aria-hidden="true" />
-              </button>
+                </button></a>
             </div>
             <div className="col-sm-2">
-              <button className="contact btn btn-block">
+              <a target="_blank" href="https://github.com/anawebdev"><button className="contact btn btn-block">
                 <i className="fa fa-github" aria-hidden="true" />
-              </button>
+                </button></a>
             </div>
             <div className="col-sm-2">
-              <button className="contact btn btn-block">
+              <a target="_blank" href="https://twitter.com/anawebdev"><button className="contact btn btn-block">
                 <i className="fa fa-twitter" aria-hidden="true" />
-              </button>
+                </button></a>
             </div>
             <div className="col-sm-2">
-              <button className="contact btn btn-block">
+              <a target="_blank" href="http://codepen.io/feuerbird29/"><button className="contact btn btn-block">
                 <i className="fa fa-codepen" aria-hidden="true" />
-              </button>
+                </button></a>
             </div>
             <div className="col-sm-2" />
           </div>
@@ -61,19 +56,13 @@ var Footer = React.createClass({
 });
 
 var Accordion = React.createClass({
-  propTypes: {
-    title: React.PropTypes.string.isRequired,
-    img: React.PropTypes.string.isRequired,
-    ingredients: React.PropTypes.string.isRequired,
-    instructions: React.PropTypes.string.isRequired
-  },
   getInitialState: function() {
     if (
       localStorage.getItem("_feuerbird29_recipes") !== null &&
       localStorage.getItem("_feuerbird29_recipes") !== ""
-    ) {
+    ) {var recipes = JSON.parse(localStorage.getItem("_feuerbird29_recipes"))
       return (this.state = {
-        recipes: JSON.parse(localStorage.getItem("_feuerbird29_recipes"))
+        recipes: recipes
       });
     }
     var initial = [
@@ -137,6 +126,23 @@ var Accordion = React.createClass({
       ReactDOM.render(<RecipeBox />, document.getElementById("app"));
     }
   },
+  handleEdit: function(e){
+    var index = e.target.value;
+    var titleCopy = document.getElementById("title"+index).value;
+    var imgCopy = document.getElementById("img"+index).value;
+    var ingredientsCopy = document.getElementById("ingredients"+index).value;
+    var instructionsCopy = document.getElementById("instructions"+index).value;
+    var valueObject = JSON.parse(localStorage.getItem("_feuerbird29_recipes"));
+    if(valueObject[index].title!==titleCopy){valueObject[index].title=titleCopy;}
+    if(valueObject[index].img!==imgCopy){valueObject[index].img=imgCopy;}
+    if(valueObject[index].ingredients!==ingredientsCopy){valueObject[index].ingredients=ingredientsCopy;}
+    if(valueObject[index].instructions!==instructionsCopy){valueObject[index].instructions=instructionsCopy;}
+    localStorage.setItem("_feuerbird29_recipes", JSON.stringify(valueObject));
+      this.state = {
+        recipes: valueObject
+      };
+      ReactDOM.render(<RecipeBox />, document.getElementById("app"));
+  },
   render: function() {
     return (
       <div className="contaner-fluid main">
@@ -157,7 +163,6 @@ var Accordion = React.createClass({
                 <div className="panel-body">
                   <form>
                     <input
-                      defaultValue={this.props.title}
                       type="text"
                       id="title"
                       placeholder="Title... (required)"
@@ -165,21 +170,18 @@ var Accordion = React.createClass({
                     />
                     <br />
                     <input
-                      defaultValue={this.props.img}
                       type="url"
                       id="img"
                       placeholder="Image URL..."
                     />
                     <br />
                     <textarea
-                      defaultValue={this.props.ingredients}
                       type="text"
                       id="ingredients"
                       placeholder="Ingredients... (required)"
                     />
                     <br />
                     <textarea
-                      defaultValue={this.props.instructions}
                       type="text"
                       id="instructions"
                       placeholder="Instructions... (required)"
@@ -230,9 +232,9 @@ var Accordion = React.createClass({
                         <button
                           className="btn taskbtn"
                           value={index}
-                          onClick={this.handleEdit}
                           data-toggle="modal"
-                          data-target="#myModal"
+                          data-target={'#myModal'+index}
+                          id={"edit"+index}
                         >
                           Edit
                         </button>
@@ -245,39 +247,36 @@ var Accordion = React.createClass({
                         </button>
                       </div>
                     </div>
-                  </div>
-                );
-              }.bind(this)
-            )}
-          </div>
-          <div className="col-sm-1" />
-        </div>
-
-        <div id="myModal" className="modal fade" role="dialog">
+                    
+                    <div id={'myModal'+index} className="modal fade" role="dialog">
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h4 className="modal-title">Modal Header</h4>
+                <h4 className="modal-title">Edit Recipe</h4>
               </div>
               <div className="modal-body">
-                <input />
+                <h4>Title: </h4>
+                <input defaultValue={data.title} id={"title"+index}></input>
               </div>
               <div className="modal-body">
-                <input />
+                <h4>Image URL:</h4>
+                <input defaultValue={data.img} id={"img"+index}></input>
               </div>
               <div className="modal-body">
-                <textarea />
+                <h4>Ingredients:</h4>
+                <textarea defaultValue={data.ingredients}  id={"ingredients"+index}></textarea>
               </div>
               <div className="modal-body">
-                <textarea />
+                <h4>Instructions:</h4>
+                <textarea defaultValue={data.instructions}  id={"instructions"+index}></textarea>
               </div>
               <div className="modal-footer">
-                <button type="button" className="btn btn-default">
+                <button type="button" className="btn  taskbtn" onClick={this.handleEdit} value={index} data-dismiss="modal">
                   Save
                 </button>
                 <button
                   type="button"
-                  className="btn btn-default"
+                  className="btn  taskbtn"
                   data-dismiss="modal"
                 >
                   Close
@@ -286,6 +285,19 @@ var Accordion = React.createClass({
             </div>
 
           </div>
+        </div>
+                    
+                  </div>
+                  
+                  
+        
+                );
+              }.bind(this)
+            )}
+          </div>
+          <div className="col-sm-1" />
+          
+          
         </div>
 
       </div>
