@@ -1,9 +1,6 @@
 "use strict";
 
 //TO DO
-//add external links
-//edit
-//close accordion when deleting item
 //add markdown text
 //add comments
 //add detailed documentation on github
@@ -20,14 +17,12 @@ var Header = React.createClass({
       React.createElement(
         "div",
         { className: "row header" },
-        React.createElement("div", { className: "col-sm-1" }),
-        React.createElement("hr", null),
         React.createElement(
           "div",
-          { className: "col-sm-10" },
+          { className: "col-sm-12" },
           React.createElement(
             "h1",
-            null,
+            { id: "pageTitle" },
             "CoffeeBox"
           )
         ),
@@ -55,36 +50,53 @@ var Footer = React.createClass({
             "div",
             { className: "col-sm-2" },
             React.createElement(
-              "button",
-              { className: "contact btn btn-block" },
-              React.createElement("i", { className: "fa fa-free-code-camp", "aria-hidden": "true" })
+              "a",
+              { target: "_blank", href: "https://www.freecodecamp.com/anawebdev" },
+              " ",
+              React.createElement(
+                "button",
+                { className: "contact btn btn-block" },
+                React.createElement("i", { className: "fa fa-free-code-camp", "aria-hidden": "true" })
+              )
             )
           ),
           React.createElement(
             "div",
             { className: "col-sm-2" },
             React.createElement(
-              "button",
-              { className: "contact btn btn-block" },
-              React.createElement("i", { className: "fa fa-github", "aria-hidden": "true" })
+              "a",
+              { target: "_blank", href: "https://github.com/anawebdev" },
+              React.createElement(
+                "button",
+                { className: "contact btn btn-block" },
+                React.createElement("i", { className: "fa fa-github", "aria-hidden": "true" })
+              )
             )
           ),
           React.createElement(
             "div",
             { className: "col-sm-2" },
             React.createElement(
-              "button",
-              { className: "contact btn btn-block" },
-              React.createElement("i", { className: "fa fa-twitter", "aria-hidden": "true" })
+              "a",
+              { target: "_blank", href: "https://twitter.com/anawebdev" },
+              React.createElement(
+                "button",
+                { className: "contact btn btn-block" },
+                React.createElement("i", { className: "fa fa-twitter", "aria-hidden": "true" })
+              )
             )
           ),
           React.createElement(
             "div",
             { className: "col-sm-2" },
             React.createElement(
-              "button",
-              { className: "contact btn btn-block" },
-              React.createElement("i", { className: "fa fa-codepen", "aria-hidden": "true" })
+              "a",
+              { target: "_blank", href: "http://codepen.io/feuerbird29/" },
+              React.createElement(
+                "button",
+                { className: "contact btn btn-block" },
+                React.createElement("i", { className: "fa fa-codepen", "aria-hidden": "true" })
+              )
             )
           ),
           React.createElement("div", { className: "col-sm-2" })
@@ -97,16 +109,11 @@ var Footer = React.createClass({
 var Accordion = React.createClass({
   displayName: "Accordion",
 
-  propTypes: {
-    title: React.PropTypes.string.isRequired,
-    img: React.PropTypes.string.isRequired,
-    ingredients: React.PropTypes.string.isRequired,
-    instructions: React.PropTypes.string.isRequired
-  },
   getInitialState: function getInitialState() {
     if (localStorage.getItem("_feuerbird29_recipes") !== null && localStorage.getItem("_feuerbird29_recipes") !== "") {
+      var recipes = JSON.parse(localStorage.getItem("_feuerbird29_recipes"));
       return this.state = {
-        recipes: JSON.parse(localStorage.getItem("_feuerbird29_recipes"))
+        recipes: recipes
       };
     }
     var initial = [{
@@ -164,6 +171,31 @@ var Accordion = React.createClass({
       ReactDOM.render(React.createElement(RecipeBox, null), document.getElementById("app"));
     }
   },
+  handleEdit: function handleEdit(e) {
+    var index = e.target.value;
+    var titleCopy = document.getElementById("title" + index).value;
+    var imgCopy = document.getElementById("img" + index).value;
+    var ingredientsCopy = document.getElementById("ingredients" + index).value;
+    var instructionsCopy = document.getElementById("instructions" + index).value;
+    var valueObject = JSON.parse(localStorage.getItem("_feuerbird29_recipes"));
+    if (valueObject[index].title !== titleCopy) {
+      valueObject[index].title = titleCopy;
+    }
+    if (valueObject[index].img !== imgCopy) {
+      valueObject[index].img = imgCopy;
+    }
+    if (valueObject[index].ingredients !== ingredientsCopy) {
+      valueObject[index].ingredients = ingredientsCopy;
+    }
+    if (valueObject[index].instructions !== instructionsCopy) {
+      valueObject[index].instructions = instructionsCopy;
+    }
+    localStorage.setItem("_feuerbird29_recipes", JSON.stringify(valueObject));
+    this.state = {
+      recipes: valueObject
+    };
+    ReactDOM.render(React.createElement(RecipeBox, null), document.getElementById("app"));
+  },
   render: function render() {
     return React.createElement(
       "div",
@@ -201,7 +233,6 @@ var Accordion = React.createClass({
                   "form",
                   null,
                   React.createElement("input", {
-                    defaultValue: this.props.title,
                     type: "text",
                     id: "title",
                     placeholder: "Title... (required)",
@@ -209,21 +240,18 @@ var Accordion = React.createClass({
                   }),
                   React.createElement("br", null),
                   React.createElement("input", {
-                    defaultValue: this.props.img,
                     type: "url",
                     id: "img",
                     placeholder: "Image URL..."
                   }),
                   React.createElement("br", null),
                   React.createElement("textarea", {
-                    defaultValue: this.props.ingredients,
                     type: "text",
                     id: "ingredients",
                     placeholder: "Ingredients... (required)"
                   }),
                   React.createElement("br", null),
                   React.createElement("textarea", {
-                    defaultValue: this.props.instructions,
                     type: "text",
                     id: "instructions",
                     placeholder: "Instructions... (required)"
@@ -304,9 +332,9 @@ var Accordion = React.createClass({
                     {
                       className: "btn taskbtn",
                       value: index,
-                      onClick: this.handleEdit,
                       "data-toggle": "modal",
-                      "data-target": "#myModal"
+                      "data-target": '#myModal' + index,
+                      id: "edit" + index
                     },
                     "Edit"
                   ),
@@ -320,70 +348,90 @@ var Accordion = React.createClass({
                     "Delete"
                   )
                 )
+              ),
+              React.createElement(
+                "div",
+                { id: 'myModal' + index, className: "modal fade", role: "dialog" },
+                React.createElement(
+                  "div",
+                  { className: "modal-dialog" },
+                  React.createElement(
+                    "div",
+                    { className: "modal-content" },
+                    React.createElement(
+                      "div",
+                      { className: "modal-header" },
+                      React.createElement(
+                        "h4",
+                        { className: "modal-title" },
+                        "Edit Recipe"
+                      )
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "modal-body" },
+                      React.createElement(
+                        "h4",
+                        null,
+                        "Title: "
+                      ),
+                      React.createElement("input", { defaultValue: data.title, id: "title" + index })
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "modal-body" },
+                      React.createElement(
+                        "h4",
+                        null,
+                        "Image URL:"
+                      ),
+                      React.createElement("input", { defaultValue: data.img, id: "img" + index })
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "modal-body" },
+                      React.createElement(
+                        "h4",
+                        null,
+                        "Ingredients:"
+                      ),
+                      React.createElement("textarea", { defaultValue: data.ingredients, id: "ingredients" + index })
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "modal-body" },
+                      React.createElement(
+                        "h4",
+                        null,
+                        "Instructions:"
+                      ),
+                      React.createElement("textarea", { defaultValue: data.instructions, id: "instructions" + index })
+                    ),
+                    React.createElement(
+                      "div",
+                      { className: "modal-footer" },
+                      React.createElement(
+                        "button",
+                        { type: "button", className: "btn  taskbtn", onClick: this.handleEdit, value: index, "data-dismiss": "modal" },
+                        "Save"
+                      ),
+                      React.createElement(
+                        "button",
+                        {
+                          type: "button",
+                          className: "btn  taskbtn",
+                          "data-dismiss": "modal"
+                        },
+                        "Close"
+                      )
+                    )
+                  )
+                )
               )
             );
           }.bind(this))
         ),
         React.createElement("div", { className: "col-sm-1" })
-      ),
-      React.createElement(
-        "div",
-        { id: "myModal", className: "modal fade", role: "dialog" },
-        React.createElement(
-          "div",
-          { className: "modal-dialog" },
-          React.createElement(
-            "div",
-            { className: "modal-content" },
-            React.createElement(
-              "div",
-              { className: "modal-header" },
-              React.createElement(
-                "h4",
-                { className: "modal-title" },
-                "Modal Header"
-              )
-            ),
-            React.createElement(
-              "div",
-              { className: "modal-body" },
-              React.createElement("input", null)
-            ),
-            React.createElement(
-              "div",
-              { className: "modal-body" },
-              React.createElement("input", null)
-            ),
-            React.createElement(
-              "div",
-              { className: "modal-body" },
-              React.createElement("textarea", null)
-            ),
-            React.createElement(
-              "div",
-              { className: "modal-body" },
-              React.createElement("textarea", null)
-            ),
-            React.createElement(
-              "div",
-              { className: "modal-footer" },
-              React.createElement(
-                "button",
-                { type: "button", className: "btn btn-default" },
-                "Save"
-              ),
-              React.createElement(
-                "button",
-                {
-                  type: "button",
-                  className: "btn btn-default",
-                  "data-dismiss": "modal"
-                },
-                "Close"
-              )
-            )
-          )
-        )
       )
     );
   }
