@@ -1,0 +1,15 @@
+$dark-grey: rgba(32,32,32,1);
+$light-grey: rgba(72,72,72,1);
+
+tr {
+  background:$dark-grey;
+  border: 1px solid $light-grey;
+  width: 10px;
+  height: 10px;
+}  
+.alive {
+  background: blue;
+}
+.dead {
+  background: black;
+}

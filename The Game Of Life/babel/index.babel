@@ -1,0 +1,68 @@
+const GridHeight = 30;
+const GridWidth = 60;
+
+//STATELESS COMPONENTS
+class Header extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+}
+class Footer extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+}
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <div>
+        <Header />
+        <App />
+        <Footer />
+      </div>
+    );
+  }
+}
+
+//MAKES GRID - height is number of rows; width is number of columns; clear should be true if the board needs to be cleared
+const Grid = (height,width,clear) => {
+  let grid = [];
+  for(let i=0;i<height;i++){
+    let row = [];
+    for (let j=0;j<width;j++){
+      if(clear){
+        row.push({status:0});
+      } else {
+        let value = Math.round(Math.random());
+      row.push({status:value});
+      }
+    }
+    grid.push(row);
+  }
+  console.log(grid);
+  return grid;
+}
+
+class Board extends React.Component {
+  render () {
+    return (
+    <div>
+        {this.props.board.map((row,idxi)=>
+                             <tr key={idxi}>
+                                {row.map((column,idxj)=>
+                                        <td key={idxj}
+                                          className={(column.status===1 ? 'alive':'dead')}>
+                                           </td>
+                                        )}
+                                </tr>
+                                )}
+        </div>
+    )
+  }
+}
+
+Grid(5,3,false);
+ReactDOM.render(<App />, document.getElementById("app"));

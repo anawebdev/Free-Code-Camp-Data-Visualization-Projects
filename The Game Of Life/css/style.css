@@ -1,0 +1,14 @@
+tr {
+  background: #202020;
+  border: 1px solid #484848;
+  width: 10px;
+  height: 10px;
+}
+
+.alive {
+  background: blue;
+}
+
+.dead {
+  background: black;
+}
