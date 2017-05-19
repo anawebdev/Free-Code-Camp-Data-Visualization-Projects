@@ -1,4 +1,4 @@
-# Free-Code-Camp-Front-End-Projects
+# Free-Code-Camp-Data-Visualization-Projects
 ---
 _freeCodeCamp is a friendly open source community where you learn to code and help nonprofits.
 We help our campers build job-worthy portfolios of real apps used by real people, while helping nonprofits.
