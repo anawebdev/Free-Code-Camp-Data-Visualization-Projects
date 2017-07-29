@@ -22,11 +22,11 @@ A simple awy to store your coffee based recipes.
 
 - Edit item:
 
-![](http://i.imgur.com/2SwguYG.gifv)
+![](http://i.imgur.com/2SwguYG.gif)
 
 - Add and delete item: 
 
-![](http://i.imgur.com/AcCa08t.gifv)
+![](http://i.imgur.com/AcCa08t.gif)
 
 - - -
 
