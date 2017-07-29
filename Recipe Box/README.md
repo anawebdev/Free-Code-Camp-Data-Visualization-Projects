@@ -4,7 +4,7 @@
 
 ### Description
 
-A simple awy to store your coffee based recipes.
+A simple way to store your coffee based recipes.
 
 - - -
 
@@ -44,6 +44,6 @@ A simple awy to store your coffee based recipes.
 
 - - -
 
-*This is a project number 3 for [FreeCodeCamp](https://github.com/freeCodeCamp/freeCodeCamp)'s Data Visualization Certificate.*
+*This is project number 3 for [FreeCodeCamp](https://github.com/freeCodeCamp/freeCodeCamp)'s Data Visualization Certificate.*
 
 
