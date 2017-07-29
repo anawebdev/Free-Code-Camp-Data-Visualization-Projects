@@ -1,4 +1,4 @@
-![](https://github.com/anawebdev/Free-Code-Camp-Data-Visualization-Projects)
+![](http://i.imgur.com/LBE6Y9d.jpg)
 
 - - - 
 
